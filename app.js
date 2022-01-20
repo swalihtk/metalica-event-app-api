@@ -29,7 +29,12 @@ mongoose.connect(process.env.MONGODB_URL, (err) => {
 
 // user routes
 const userRouter = require("./routes/user/index");
-app.use("/api", userRouter);
+app.use("/api/user", userRouter);
+
+// admin routes
+const adminRouter = require("./routes/admin/index");
+app.use("/api/admin", adminRouter);
+
 
 // connection
 app.listen(PORT, () => console.log("server running on " + PORT));
