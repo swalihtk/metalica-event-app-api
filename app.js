@@ -25,8 +25,8 @@ mongoose.connect(process.env.MONGODB_URL, (err) => {
   console.log("Database Connected");
 });
 
-// admin routes
 
+app.get("/",(req,res)=>res.send("Hello world!!"))
 // user routes
 const userRouter = require("./routes/user/index");
 app.use("/api/user", userRouter);
