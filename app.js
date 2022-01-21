@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
+const cookieParser=require("cookie-parser");
 
 // dotenv config
 dotenv.config();
@@ -15,6 +16,7 @@ const PORT = process.env.PORT;
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
+app.use(cookieParser());
 
 // mongoose
 mongoose.connect(process.env.MONGODB_URL, (err) => {

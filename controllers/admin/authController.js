@@ -1,32 +1,36 @@
 const Admin = require("../../models/admin/admin");
 const crypto = require("crypto");
+const jwt=require("jsonwebtoken");
 
 module.exports = {
   authAdmin: async function (req, res) {
     try {
       let { email, password } = req.body;
 
-      let existingAdmin = Admin.findOne({ email: email });
+      let existingAdmin =await Admin.findOne({email});
 
       if (!existingAdmin) {
         res.json({ code: 404, error: "admin not found" });
       } else {
-        let hashPassword = crypto
-          .createHmac("sha256", password)
-          .update("secret")
-          .digest("hex");
-
-        if (hashPassword !== existingAdmin) {
+        let hashPassword =await crypto
+        .createHmac("sha256", password)
+        .update("secret")
+        .digest("hex");
+       
+        if (hashPassword !== existingAdmin.password) {
           res.json({ code: 404, error: "Authentication failed" });
         } else {
           let adminToken = await jwt.sign(
             { id: existingAdmin._id },
             process.env.JWT_SECRET
           );
-          res.cookie(adminToken).send();
+          res.cookie("utoken",adminToken, {
+            maxAge:1000000
+          }).send();
         }
       }
     } catch (e) {
+      console.log(e);
       res.json({ code: 500, error: "something went wrong!" });
     }
   },
@@ -61,6 +65,7 @@ module.exports = {
             res.json({logedin:false});
         }
       }catch(e){
+        console.log(e);
           res.json({code:500, error:"something went wrong", logedin:false});
       }
   }

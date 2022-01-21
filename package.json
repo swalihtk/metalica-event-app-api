@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/swalihtk/metalica-event-app-api#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "dotenv": "^12.0.3",
     "express": "^4.17.2",
     "express-stormpath": "^4.0.0",
