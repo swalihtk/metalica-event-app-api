@@ -34,7 +34,7 @@ module.exports = {
       res.json({ code: 500, error: "something went wrong!" });
     }
   },
-
+  
   authWithEmail: async function (req, res) {
     try {
       let { email } = req.body;
